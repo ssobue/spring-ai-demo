@@ -1,5 +1,29 @@
 spring:
+  main:
+    banner-mode: console
   profiles:
     active: dev
   application:
     name: spring-ai-demo
+  shell:
+    interactive:
+      enabled: true
+  # ollama
+  ai:
+    openai:
+      api-key: dummy
+      base-url: http://localhost:11434
+      chat:
+        options:
+          # https://ollama.com/library/gpt-oss:20b
+          model: gpt-oss:20b
+
+# Logging
+logging:
+  level:
+    root: info
+    org.springframework: warn
+    org.apache.coyote: warn
+    org.apache.catalina: warn
+    org.apache.tomcat: warn
+    com.zaxxer.hikari: warn
