@@ -1,17 +1,17 @@
 package dev.sobue.ai.spring;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.core.command.annotation.Command;
 
-@Slf4j
-@ShellComponent
 public class ChatCommand {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(ChatCommand.class);
 
   private static final String PID =
       java.lang.management.ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
@@ -31,7 +31,7 @@ public class ChatCommand {
         .build();
   }
 
-  @ShellMethod("Conversation to AI model")
+  @Command(name = "chat", description = "Conversation to AI model")
   public void chat(String prompt) {
     String response = this.chatClient.prompt()
         .messages()
@@ -40,6 +40,6 @@ public class ChatCommand {
         .call()
         .entity(String.class);
 
-    log.info("AI answers: {}", response);
+    LOGGER.info("AI answers: {}", response);
   }
 }
